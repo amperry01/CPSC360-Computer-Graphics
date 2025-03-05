@@ -14,17 +14,17 @@ def example_initTeapot():
     glutWireTeapot(5.0)                                                     # draw a teaport of size 5 in wireframe mode
 
 def example_translate():
-    glTranslatef(15.0, 0.0, 0.0)                                            # construct translation matrix with a translation vector
+    glTranslatef(15.0, -10.0, 5.0)                                            # construct translation matrix with a translation vector
     glColor3f(1.0, 0.2, 0.6)                                                # draw the transformed teaport in pink
     glutWireTeapot(5.0)
 
 def example_scale():
-    glScalef(2.0, 2.0, 2.0)                                                 # construct scaling matrix with three scaling factors
+    glScalef(0.5, 2.0, 1.0)                                                 # construct scaling matrix with three scaling factors
     glColor3f(1.0, 0.2, 0.6)                                                # draw the transformed teaport in pink
     glutWireTeapot(5.0)
 
 def example_rotate():
-    glRotatef(-30.0, 0.0, 0.0, 1.0)                                         # construct rotation matrix along z-axis (0,0,1)
+    glRotatef(90.0, 1.0, 0.0, 0.0)                                         # construct rotation matrix along z-axis (0,0,1)
     glColor3f(1.0, 0.2, 0.6)                                                # draw the transformed teaport in pink
     glutWireTeapot(5.0)
 
@@ -131,7 +131,7 @@ def draw():                                                                 # Th
     # geometric transformation examples (uncomment "example_initTeatpot")
     #example_translate()                                                    # translate
     #example_scale()                                                        # scale
-    #example_rotate()                                                       # rotate
+    example_rotate()                                                       # rotate
 
     # composite transformation examples (comment out "example_initTeatpot")
     #example_rotate_tranlate()
