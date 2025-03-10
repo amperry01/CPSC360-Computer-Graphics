@@ -69,9 +69,10 @@ def example_translate_rotate():                                              # t
 ########################################### Exercise ####################################################
 # Exercise 1: Order of Transformations
 def exercise1_transfOrder():
-    # TODO: Rotate the square around a point (4, 4, 0.1) along the z-axis by 90 degrees; write transformation code below:
-
-
+    # TODO: Rotate the square around a point (4, 4, 0.1) along the z-axis by 45 degrees in CCW; write transformation code below:
+    glTranslatef(4, 4, 0.1)
+    glRotatef(45, 0, 0, 1)
+    glTranslatef(-4, -4, -0.1)
 
     # draw a square (quad) centered at (4, 4, 0.1) in blue
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)                               
@@ -83,6 +84,7 @@ def exercise1_transfOrder():
     glVertex3f(2.0, 2.0, 0.1)
     glEnd()
 
+
 # Exercise 2: Transform Multiple Objects Using glPush/glPop
 def exercise2_push_pop():
     # configure quatratic drawing
@@ -90,15 +92,18 @@ def exercise2_push_pop():
     gluQuadricDrawStyle(quadratic, GLU_FILL)
   
     # TODO: Rotate the cylinder around x-axis by -90
-
+    glPushMatrix()
+    glRotatef(-90, 1, 0, 0)
     glColor3f(1.0, 1.0, 0.0)
     gluCylinder(quadratic, 2.5, 2.5, 10.0, 32, 32)
-
+    glPopMatrix()
 
     # TODO: Translate the sphere by (10, 10, 0) without rotation
-
+    glPushMatrix()
+    glTranslatef(10, 10, 0)
     glColor3f(0.0, 1.0, 0.0)
     gluSphere(quadratic, 2.5, 32, 32)
+    glPopMatrix()
 
 
 
@@ -124,14 +129,14 @@ def draw():                                                                 # Th
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)                        # clear the buffers initialized in the display mode
     
     # initialize a teapot in white at origin
-    example_initTeapot()
+    #example_initTeapot()
 
     glPushMatrix()                                                          # save the current model-view trans matrix in the stack
     
     # geometric transformation examples (uncomment "example_initTeatpot")
     #example_translate()                                                    # translate
     #example_scale()                                                        # scale
-    example_rotate()                                                       # rotate
+    #example_rotate()                                                       # rotate
 
     # composite transformation examples (comment out "example_initTeatpot")
     #example_rotate_tranlate()
@@ -141,7 +146,7 @@ def draw():                                                                 # Th
     #exercise1_transfOrder()
 
     # Exercise 2: Transform Multiple Objects Using glPush/glPop (uncomment to run the function)
-    #exercise2_push_pop()
+    exercise2_push_pop()
 
     glPopMatrix()                                                           # restore the saved model-view trans matrix back
 
