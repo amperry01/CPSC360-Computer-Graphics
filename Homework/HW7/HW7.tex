@@ -1,0 +1,113 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{graphicx}
+
+\begin{document}
+
+\noindent {\large \textbf{Assignment 6 - Viewing I \& II}} \par
+\medskip
+\noindent {\large Alyssa Perry} \par
+\medskip
+\noindent {\large Tuesday, April 1, 2025} \par
+\medbreak
+
+\begin{enumerate}
+    \item Screen Space Description
+    \medbreak
+            
+    You can think of screen space as the 2D grid where everything gets drawn on your screen. It's kind of like a canvas that your computer uses to show stuff. 
+    The origin usually starts in a corner (like the top-left), and the x and y axes go across and down. It’s often a left-handed system, which means the axes follow a certain direction convention. 
+    It’s useful because it makes positioning things on screen a lot more predictable.
+
+        \medbreak
+        To transform a 3D point to screen space using perspective projection:
+        \begin{enumerate}
+            \item \textbf{Model Transformation}: Convert object coordinates to world space.
+            \item \textbf{View Transformation}: Convert world coordinates to camera/view space.
+            \item \textbf{Projection Transformation}: Apply a perspective projection matrix to get clip space coordinates.
+            \item \textbf{Clipping}: Remove any parts of the geometry outside the view frustum.
+            \item \textbf{Perspective Divide}: Divide by $w$ to get normalized device coordinates (NDC).
+            \item \textbf{Viewport Transformation}: Convert NDC to screen space using screen width and height.
+        \end{enumerate}
+
+    \item Perspective View Volume Properties
+        \medbreak
+        \textbf{Given:} $z_{\text{near}} = -1$, distance to far = 49 $\Rightarrow z_{\text{far}} = -50$
+
+        \textbf{Near clipping window:} width = 200, height = 100
+
+        \textbf{a. Near and Far Planes:} $z_{\text{near}} = -1$, $z_{\text{far}} = -50$ 
+
+        \textbf{b. Clipping Window:} $x_l = -100,\quad x_r = 100,\quad y_b = -50,\quad y_t = 50$
+
+        \textbf{c. Perspective to Orthographic Matrix $M_{\text{persp}\to\text{ortho}}$:}
+        \[
+        M_{\text{persp}\to\text{ortho}} =
+        \begin{bmatrix}
+        -1 & 0 & 0 & 0 \\
+        0 & -1 & 0 & 0 \\
+        0 & 0 & -51 & -50 \\
+        0 & 0 & 1 & 0
+        \end{bmatrix}
+        \]
+        \textbf{d. Final Normalized Matrix $M_{\text{persp}\to\text{norm}}$} can be obtained by multiplying with the orthographic normalization matrix.
+
+    \item Viewport Transformation
+        \medbreak
+        \textbf{a. Viewport Matrix:}
+        \[
+        M_{\text{viewport}} =
+        \begin{bmatrix}
+        6 & 0 & 0 & 6 \\
+        0 & 5 & 0 & 5 \\
+        0 & 0 & 1 & 0 \\
+        0 & 0 & 0 & 1
+        \end{bmatrix}
+        \quad \text{(width = 12, height = 10)}
+        \]
+        \textbf{b. Transform NDC (0.5, 0.5, 0.5):}
+        \[
+        \begin{bmatrix}
+        x \\
+        y \\
+        z \\
+        1
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+        6 & 0 & 0 & 6 \\
+        0 & 5 & 0 & 5 \\
+        0 & 0 & 1 & 0 \\
+        0 & 0 & 0 & 1
+        \end{bmatrix}
+        \begin{bmatrix}
+        0.5 \\
+        0.5 \\
+        0.5 \\
+        1
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+        9 \\
+        7.5 \\
+        0.5 \\
+        1
+        \end{bmatrix}
+        \]
+        \textbf{c. Pixel Coordinates:} $(x_{\text{pixel}}, y_{\text{pixel}}) = (9, 7.5)$
+
+    \item Calculating Vertical Field of View (FOV)
+        \medbreak
+        \textbf{Given:} Near plane at $z = -10$, Window size = $10 \times 12$
+       
+        \textbf{Vertical FOV:}
+        \[
+        \theta = 2 \cdot \tan^{-1}\left(\frac{H}{2 \cdot |z_{\text{near}}|}\right)
+        = 2 \cdot \tan^{-1}\left(\frac{12}{20}\right)
+        = 2 \cdot \tan^{-1}(0.6)
+        \approx 61.9^\circ
+        \]
+
+\end{enumerate}
+
+\end{document}
